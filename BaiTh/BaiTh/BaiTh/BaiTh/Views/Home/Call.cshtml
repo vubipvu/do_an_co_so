@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <title>Tin tức</title>
+    <meta name="keywords" content="Tin tức, Ego Helios, ego-helios.mysapo.net">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .breadcrumb {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+            .breadcrumb li {
+                display: inline;
+                font-size: 14px;
+                color: #333;
+                margin-right: 5px;
+            }
+
+                .breadcrumb li a {
+                    color: #333;
+                    text-decoration: none;
+                }
+
+        .form-contact {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+            .form-contact h4 {
+                margin-top: 0;
+                font-size: 24px;
+                color: #333;
+            }
+
+            .form-contact p {
+                font-size: 16px;
+                color: #666;
+            }
+
+            .form-contact input[type="text"],
+            .form-contact input[type="number"],
+            .form-contact input[type="email"],
+            .form-contact textarea {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-sizing: border-box;
+                font-size: 16px;
+            }
+
+            .form-contact textarea {
+                height: 150px;
+            }
+
+            .form-contact button {
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                padding: 12px 20px;
+                font-size: 16px;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+                .form-contact button:hover {
+                    background-color: #0056b3;
+                }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <ul class="breadcrumb">
+            <li class="home">
+                <a href="/" class="text-dark font-size-14px text-decoration-none" style="padding: 11px 0;">Trang chủ</a>
+                <span class="mr_lr">&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="14" height="13" viewBox="0 0 14 13" fill="none"> <path d="M13.4246 6.50003L7.41421 12.5104L6 11.0962L10.5962 6.50003L6 1.90384L7.41422 0.489624L13.4246 6.50003Z" fill="#8C8C8C"></path> <path d="M8 6.50003L1.98959 12.5104L0.575378 11.0962L5.17157 6.50003L0.57538 1.90384L1.98959 0.489624L8 6.50003Z" fill="#8C8C8C"></path> </svg>&nbsp;</span>
+            </li>
+            <li>
+                <span class="text-dark font-size-14px" style="padding: 11px 0;">Liên hệ</span>
+            </li>
+        </ul>
+
+        <div class="form-contact">
+            <h4>Thông tin liên hệ</h4>
+            <p>
+                Bạn hãy điền nội dung tin nhắn vào form dưới đây và gửi cho chúng tôi.<br>
+                Chúng tôi sẽ trả lời bạn sau khi nhận được.
+            </p>
+            <form method="post" action="/postcontact" id="contact" accept-charset="UTF-8">
+                <input name="FormType" type="hidden" value="contact">
+                <input name="utf8" type="hidden" value="true">
+                <input type="hidden" id="Token-bfdd745681944ee497a63b5e80fb082e" name="Token" value="03AFcWeA784fbqh3dqYFCpPEKEE9000M0yO7MrbVncWaPEGiMo2EC5HyA3xfVXiA1oJleqijLDI0ZXCSDw-F4jXPbuJqm6vTzO9EaiHzG8Gzps9EmwsAS8N4Ag7p2kiJX6n4GgzfYUJ4dw8RxoKywJ-Fa7nuDbkuYVOT7iG3HzR0EmQv_AScdmLChrQBPuStAgVi6XwY-uLexCV62Dy-z9OuCQfG6HqEKLsKHEnz7AWBJ30fgzanaJR1zgQQToZcLkPPu8-KHDOq-SOiGDnrM9Ny0CQrSKHgq2TLdjEAs0c1ueAf69Hxwj0Rc_cDO8XteSFg24oyPw-Pan-W63c8qSKt-yrx9l9I3dN4QaH2G1WYbIBclZPBCvFATE4zpiEcDvXJWrewkde0ZoFvpXbwZFZUwR6EMV-4IzalzQbmAqv2LaasE2oWtPSieURKbhlbRAb_hdq902dvHd6hEItrPLjnouRXHaingtamFIrT25tsU4slgePL84mkqA25LFvpOXYNfR1VC5vyavJ-pfST6J2Qp9R5pVTZ8JH_wk9BcXV2PXEh7CcXPAE-OYgMlnsqMQLSP2wTBhd2nv2SeS-IDG7idFgQGw2qmAGeg_Cz4HkVAVW_WOh8dDkC5apqLBC2kHGTd2tzpOYIAUOd8_zerXage_Zm3ybd91Ow">
+                <div class="group_contact">
+                    <input placeholder="Họ và tên" type="text" class="form-control form-control-lg" required="" value="" name="contact[Name]">
+                    <div class="row">
+                        <div class="col-lg-6 md-6 col-12">
+                            <input type="number" placeholder="Số điện thoại" name="contact[phone]" class="form-control form-control-lg" required="">
+                        </div>
+                        <div class="col-lg-6 md-6 col-12">
+                            <input placeholder="Email" type="email" pattern="[a-z0-9._%+-]+[a-z0-9.-]+\.[a-z]{2,4}$" required="" id="email1" class="form-control form-control-lg" value="" name="contact[email]">
+                        </div>
+                    </div>
+                    <textarea placeholder="Nội dung" name="contact[body]" id="comment" class="form-control content-area form-control-lg" rows="5" required=""></textarea>
+                    <button type="submit" class="btn-lienhe">Gửi tin nhắn</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

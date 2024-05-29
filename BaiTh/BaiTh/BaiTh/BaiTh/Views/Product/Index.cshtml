@@ -1,0 +1,236 @@
+﻿
+
+@model IEnumerable<BaiTh.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+    int numOfQuantity = 1;
+}
+
+<style>
+    .breadcrumb .breadcrumb-item a {
+        text-decoration: none;
+    }
+
+    .price {
+        color: red;
+    }
+
+    .quantity-input {
+        max-width: 80px; /* Điều chỉnh kích thước tối đa của input */
+    }
+</style>
+
+<div class="container">
+    <ul class="breadcrumb">
+        <li class="home">
+            <a href="/" class="text-dark font-size-14px text-decoration-none" style="padding: 11px 0;">Trang chủ</a>
+            <span class="mr_lr">&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="14" height="13" viewBox="0 0 14 13" fill="none"> <path d="M13.4246 6.50003L7.41421 12.5104L6 11.0962L10.5962 6.50003L6 1.90384L7.41422 0.489624L13.4246 6.50003Z" fill="#8C8C8C"></path> <path d="M8 6.50003L1.98959 12.5104L0.575378 11.0962L5.17157 6.50003L0.57538 1.90384L1.98959 0.489624L8 6.50003Z" fill="#8C8C8C"></path> </svg>&nbsp;</span>
+        </li>
+        <li>
+            <span class="text-dark font-size-14px" style="padding: 11px 0;">Sản phẩm</span>
+        </li>
+    </ul>
+</div>
+<div class="container ">
+    <div class="bg_collection section">
+        <div class="row">
+            <aside class="dqdt-sidebar sidebar filter-sidebar left-content col-lg-3 col-md-4 col-sm-4">
+                <div class="wrap_background_aside asidecollection">
+                    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+                    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+
+                    <div class="filter-content aside-filter">
+                        <div class="module-filter">
+                            <h2 class="title-filter-top margin-top-0">
+                                Bộ lọc sản phẩm
+                            </h2>
+                            <span>Giúp lọc nhanh sản phẩm tìm kiếm</span>
+                        </div>
+
+
+                        <aside class="aside-item filter-category f-left filter-dropdowns">
+                            <div class="aside-title mr-bt">
+                                <h2 class="title-filter">Thương hiệu</h2>
+                            </div>
+                            <div class="aside-content margin-top-0 filter-group">
+                                <ul id="categoryFilterList" class="list-unstyled">
+                                    <li class="filter-item filter-item--check-box filter-item--green categoryxxx">
+                                        <span>
+                                            <label for="filter-all-categories">
+                                                <input type="checkbox" id="filter-all-categories" data-group="Category" data-field="category" data-text="All" value="(All)" data-operator="OR">
+                                                <i class="fa"></i>
+                                                <span>Tất cả</span>
+                                            </label>
+                                        </span>
+                                    </li>
+                                    @foreach (var category in Model.Select(p => p.Category.Name).Distinct())
+                                    {
+                                        <li class="filter-item filter-item--check-box filter-item--green categoryxxx">
+                                            <span>
+                                                <label for="filter-@category">
+                                                    <input type="checkbox" id="filter-@category" data-group="Category" data-field="category" data-text="@category" value="(@category)" data-operator="OR">
+                                                    <i class="fa"></i>
+                                                    <span>@category</span>
+                                                </label>
+                                            </span>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </aside>
+            </aside>
+
+            <div class="main_container collection col-lg-9 col-md-12 col-sm-12">
+                <div class="head-collection">
+                    <h1 class="title-module">Tất cả sản phẩm</h1>
+                    <div class="sort-view d-flex align-items-center">
+                        <div class="sort-cate me-3">
+                            <span class="d-inline-block align-middle me-3>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none">
+                                    <!-- Biểu tượng sort -->
+                                </svg>
+                                <div class="main_container collection col-lg-9 col-md-12 col-sm-12">
+
+                                    <i class="bi bi-funnel"></i>  Sắp xếp theo giá
+                            </span>
+                            <ul class="d-inline-block list-unstyled">
+                                <!-- Các lựa chọn sắp xếp -->
+                                <li class="btn-quick-sort price-asc d-inline-block me-2">
+                                    <input type="checkbox" id="sort-price-asc" onchange="sortby('price-asc')" title="Giá từ thấp đến cao">
+                                    <i class="fa"></i>
+                                    <span>Giá từ thấp đến cao</span>
+                                </li>
+                                <li class="btn-quick-sort price-desc d-inline-block">
+                                    <input type="checkbox" id="sort-price-desc" onchange="sortby('price-desc')" title="Giá từ cao xuống thấp">
+                                    <i class="fa"></i>
+                                    <span>Giá từ cao xuống thấp</span>
+                                </li>
+
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="productList">
+                @foreach (var item in Model)
+                {
+                    <div class="col-lg-4 col-md-6 mb-4 category-item" data-category="@item.Category.Name">
+                        <div class="card h-100">
+                            <form action="/ShoppingCart/AddToCart" method="post" class="variants product-action grid_item_product_main" data-cart-form="" enctype="multipart/form-data">
+                                <input type="hidden" name="productId" value="@item.Id" />
+                                <div class="image_thumb scale_hover saleicon" data-discount="@((item.Coupon != null && item.Coupon.ValidUntil >= DateTime.Now) ? $"{item.Coupon.DiscountPercentage.ToString("0.#")}%" : "0%")" style="height: 192px;">
+                                    medium
+                                    <img class="lazyload loaded" src="@item.ImageUrl" alt="@item.Name" style="width: 100px; height: 508px; max-height: 659px;">
+                                    <div class="group-option-item">
+                                        <a href="#" data-url="" title="Thêm vào yêu thích" class="favorite-link btn-views d-inline-block">
+                                            <i class="bi bi-heart"></i>
+                                        </a>
+                                        <a title="Xem nhanh" href="/Product/Display/@item.Id" onclick="onQuickView(this);" class="quick-view btn-views">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <input type="hidden" class="form-control" name="quantity" value="1" min="1">
+                                        <button class="btn-cart btn-views add_to_cart " title="Thêm vào giỏ">
+                                            <i class="bi bi-bag-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <h3 class="product-name"><a href="#" title="Đồng Hồ Hublot Big Bang One">@item.Name</a></h3>
+                                <div class="price-box">
+                                    @if (item.Coupon != null && item.Coupon.ValidUntil >= DateTime.Now)
+                                    {
+                                        <span class="compare-price">@item.Price đ</span>
+                                        @($"{item.CalculateDiscountedPrice(item.Coupon.DiscountPercentage):0.00 đ}")
+
+                                    }
+                                    else
+                                    {
+                                        <span>@item.Price đ</span>
+                                    }
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                }
+            </div>
+
+
+
+            @section Scripts {
+                <script>
+                    $(document).ready(function () {
+                        // Filtering logic
+                        $("#filter-all-categories").on("change", function () {
+                            if ($(this).is(":checked")) {
+                                $("#categoryFilterList input[type='checkbox']").prop("checked", true);
+                            } else {
+                                $("#categoryFilterList input[type='checkbox']").prop("checked", false);
+                            }
+                            filterProductsByCategory(getSelectedCategories());
+                        });
+
+                        $(".filter-item input[type='checkbox']").on("change", function () {
+                            filterProductsByCategory(getSelectedCategories());
+                        });
+
+                        function filterProductsByCategory(categories) {
+                            $("#productList .category-item").each(function () {
+                                var category = $(this).data("category");
+                                if (categories.length === 0 || categories.includes(category)) {
+                                    $(this).show();
+                                } else {
+                                    $(this).hide();
+                                }
+                            });
+                        }
+
+                        function getSelectedCategories() {
+                            var selectedCategories = [];
+                            $(".filter-item input[type='checkbox']:checked").each(function () {
+                                selectedCategories.push($(this).data("text"));
+                            });
+                            return selectedCategories;
+                        }
+                    });
+                </script>
+
+                <script>
+                    $(document).ready(function () {
+                        // Sorting logic
+                        $("#sort-price-asc").on("change", function () {
+                            if ($(this).is(":checked")) {
+                                sortProducts('asc');
+                                $("#sort-price-desc").prop('checked', false); // Ensure only one sort option is active
+                            }
+                        });
+
+                        $("#sort-price-desc").on("change", function () {
+                            if ($(this).is(":checked")) {
+                                sortProducts('desc');
+                                $("#sort-price-asc").prop('checked', false); // Ensure only one sort option is active
+                            }
+                        });
+
+                        function sortProducts(order) {
+                            var productList = $('#productList .category-item').get();
+                            productList.sort(function (a, b) {
+                                var priceA = parseFloat($(a).find('.price-box span').first().text().replace(/\$/g, ''));
+                                var priceB = parseFloat($(b).find('.price-box span').first().text().replace(/\$/g, ''));
+
+                                return (order === 'asc' ? priceA - priceB : priceB - priceA);
+                            });
+
+                            $.each(productList, function (index, item) {
+                                $('#productList').append(item); // Re-append items in sorted order
+                            });
+                        }
+                    });
+                </script>
+            }
+
+

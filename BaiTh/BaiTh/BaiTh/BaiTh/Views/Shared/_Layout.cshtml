@@ -1,0 +1,306 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] 2 Boy Store</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet"> <!-- Thêm thư viện Bootstrap Icons -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="icon" href="//bizweb.dktcdn.net/100/508/659/themes/939030/assets/favicon.png?1710404714890" type="image/x-icon" />
+	<link rel="preload" as='style' type="text/css" href="//bizweb.dktcdn.net/100/508/659/themes/939030/assets/plugin.scss.css?1710404714890">
+	<link rel="preload" as='style' type="text/css" href="//bizweb.dktcdn.net/100/508/659/themes/939030/assets/main.scss.css?1710404714890">
+	<link rel="preload" as='style' type="text/css" href="//bizweb.dktcdn.net/100/508/659/themes/939030/assets/index.scss.css?1710404714890">
+	<link rel="stylesheet" href="//bizweb.dktcdn.net/100/508/659/themes/939030/assets/plugin.scss.css?1710404714890">
+	<link rel="preload" as='style' href="//bizweb.dktcdn.net/100/508/659/themes/939030/assets/swiper-style.scss.css?1710404714890">
+	<link href="//bizweb.dktcdn.net/100/508/659/themes/939030/assets/swiper-style.scss.css?1710404714890" rel="stylesheet" type="text/css" media="all" />
+	<link href="//bizweb.dktcdn.net/100/508/659/themes/939030/assets/main.scss.css?1710404714890" rel="stylesheet" type="text/css" media="all" />
+	<link href="//bizweb.dktcdn.net/100/508/659/themes/939030/assets/header.scss.css?1710404714890" rel="stylesheet" type="text/css" media="all" />
+	<link href="//bizweb.dktcdn.net/100/508/659/themes/939030/assets/quickview.scss.css?1710404714890" rel="stylesheet" type="text/css" media="all" />
+	<link href="//bizweb.dktcdn.net/100/508/659/themes/939030/assets/index.scss.css?1710404714890" rel="stylesheet" type="text/css" media="all" />
+	<style>
+		.navbar {
+        font-family: 'Roboto', sans-serif;
+        font-size: 15px;
+        font-weight: bold;
+    }
+        .navbar.bg-dark {
+            background-color: black !important;
+        }
+
+        .input-search-container {
+            position: relative;
+        }
+
+        .search-input {
+            display: none;
+            width: 200px;
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.25rem;
+            border: 1px solid #ced4da;
+        }
+
+            .search-input.active {
+                display: block;
+            }
+
+        .search-icon {
+            cursor: pointer;
+        }
+
+		:root {
+			--main-color: #2a3f50;
+			--text-color: #333333;
+			--font-base: 'Roboto', sans-serif;
+			--price: #eb0000;
+			--hover: #930d18;
+			--hover-link: #930d18;
+			--button-color: #ffffff;
+			--button-background: #2a3f50;
+			--button-hover: #516f86;
+			--social-footer-bg: #2a3f50;
+			--title-color-footer: #2a3f50;
+			--bg-related-blog: #ffffff;
+			--color-down: #ffffff;
+			--bg-deal: #b61615;
+		}
+    </style>
+</head>
+<body>
+
+    <header>
+       <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light border-bottom box-shadow mb-3" style="font-weight: bold;">
+            <div class="container-fluid">
+                <a class="navbar-brand text-black" asp-area="" asp-controller="Home" asp-action="Index">2Boy Store</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-black" asp-area="" asp-controller="Home" asp-action="Index">Trang Chủ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-black" asp-controller="Product" asp-action="Index">Sản Phẩm</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-black" asp-controller="Home" asp-action="Privacy">Tin Tức</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-black" asp-controller="Home" asp-action="Call">Liên Hệ</a>
+                        </li>
+						<li class="nav-item">
+                            <a class="nav-link text-black" asp-controller="Home" asp-action="Trade">Chính sách bán hàng</a>
+                        </li>
+                    </ul>
+
+                    <div class="input-search-container">
+                        <input type="search" class="form-control search-input" placeholder="Nhập từ khóa tìm kiếm" />
+                    </div>
+                    <a class="btn btn-outline-dark border-0 search-icon">
+                        <i class="bi bi-search me-1"></i>
+                    </a>
+
+                    <a class="btn btn-outline-dark border-0" asp-controller="ShoppingCart" asp-action="Index">
+                        <i class="bi bi-cart-fill me-1"></i> <!-- Biểu tượng giỏ hàng -->
+                    </a>
+                    @if (!SignInManager.IsSignedIn(User))
+                    {
+                        <!-- Icons Đăng nhập/Đăng ký hiển thị khi chưa đăng nhập -->
+                        <a class="btn btn-outline-dark border-0" style="font-weight: bold;" asp-area="Identity" asp-page="/Account/Login">
+                            <i class="bi bi-person me-1"></i> Đăng nhập
+                        </a>
+                        <a class="btn btn-outline-dark border-0 " style="font-weight: bold;"  asp-area="Identity" asp-page="/Account/Register">
+                            <i class="bi bi-pencil me-1"></i> Đăng ký
+                        </a>
+                    }
+                    else
+                    {
+                        <!-- Hiển thị tên người dùng hoặc biểu tượng người dùng khi đã đăng nhập -->
+                        @if (User.IsInRole("Admin"))
+                        {
+							<a id="manage" class="nav-link text-black" asp-area="Admin" asp-controller="ProductManager" asp-action="Index" title="Manage">Admin </a>
+                            <a class="btn btn-outline-dark border-0" style="font-weight: bold;" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                <i class="bi bi-box-arrow-right me-1"></i> Đăng xuất
+                            </a>
+                        }
+                        else
+                        {
+                            <span class="text-black me-2">@UserManager.GetUserName(User)</span>
+                            <a class="btn btn-outline-dark border-0" style="font-weight: bold;" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                <i class="bi bi-box-arrow-right me-1"></i> Đăng xuất
+                            </a>
+                        }
+                    }
+
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+	
+<footer class="footer">
+	<div class="first-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-4 col-md-6 col-12">
+					<h4 class="title-footer no-menu">
+							Về 2Boy Store
+					</h4>
+					<div class="item">
+						<div class="icon">
+							<svg aria-hidden="true"  focusable="false" data-prefix="fas" data-icon="map-marker-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="svg-inline--fa fa-map-marker-alt fa-w-12"><path fill="currentColor" d="M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0zM192 272c44.183 0 80-35.817 80-80s-35.817-80-80-80-80 35.817-80 80 35.817 80 80 80z" class=""></path></svg>
+						</div>
+						
+						<p>
+							Thủ đức, Hồ Chí Minh
+						</p>
+						
+					</div>
+					<div class="item">
+						<div class="icon">
+							<svg aria-hidden="true"  focusable="false" data-prefix="fas" data-icon="envelope" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-envelope fa-w-16"><path fill="currentColor" d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z" class=""></path></svg>
+						</div>
+							<a href="mailto:tincui012@gmail.com" title="Gửi mail">2BOYSTORE@gmail.com</a>
+					</div>
+					<div class="item">
+						<div class="icon">
+							<svg aria-hidden="true"  focusable="false" data-prefix="fas" data-icon="phone-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-phone-alt fa-w-16"><path fill="currentColor" d="M497.39 361.8l-112-48a24 24 0 0 0-28 6.9l-49.6 60.6A370.66 370.66 0 0 1 130.6 204.11l60.6-49.6a23.94 23.94 0 0 0 6.9-28l-48-112A24.16 24.16 0 0 0 122.6.61l-104 24A24 24 0 0 0 0 48c0 256.5 207.9 464 464 464a24 24 0 0 0 23.4-18.6l24-104a24.29 24.29 0 0 0-14.01-27.6z" class=""></path></svg>
+						</div>
+							<a class="fone" href="tel:0778583022" title="Gọi ngay 0778583022">0778583022</a>
+					</div>
+					
+					<div class="item">
+						<div class="icon mapsico">
+							<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24"> <path d="M17.0826 0C14.1359 0 11.7514 2.3651 11.6545 5.40872C11.5769 8.21971 14.2716 11.9225 15.8806 13.8611C16.1714 14.21 16.6173 14.4233 17.0826 14.4233C17.5478 14.4233 17.9743 14.21 18.2845 13.8611C19.8936 11.9031 22.6076 8.21971 22.5107 5.40872C22.4138 2.3651 20.0293 0 17.0826 0ZM17.0826 7.36672C16.0163 7.36672 15.144 6.49435 15.144 5.42811C15.144 4.36187 16.0163 3.4895 17.0826 3.4895C18.1488 3.4895 19.0212 4.36187 19.0212 5.42811C19.0212 6.49435 18.1488 7.36672 17.0826 7.36672Z" /> <path d="M2.03862 18.4943C2.11616 18.727 2.3488 18.8821 2.58143 18.8821C2.63959 18.8821 2.71713 18.8627 2.77529 18.8433L7.69936 17.0598L10.0839 23.6123C10.1614 23.8449 10.394 24 10.6267 24C10.6848 24 10.7624 23.9806 10.8205 23.9612C11.1307 23.8449 11.2858 23.5153 11.1695 23.2246L8.59113 16.0905L6.5362 10.4491C6.41988 10.1389 6.09032 9.98383 5.79953 10.1001C5.48935 10.2165 5.33426 10.546 5.45057 10.8368L7.31164 15.9354L2.38757 17.7189C2.07739 17.8546 1.9223 18.1842 2.03862 18.4943Z" /> <path d="M10.5297 10.6429L9.25021 11.1081L8.72678 9.65417C8.61047 9.34399 8.2809 9.1889 7.99011 9.30522C7.67993 9.42154 7.52484 9.7511 7.64116 10.0419L8.35845 12.058C8.43599 12.2907 8.66862 12.4458 8.90126 12.4458C8.95942 12.4458 9.03696 12.4264 9.09512 12.407L10.9174 11.7479C11.2276 11.6315 11.3827 11.302 11.2664 11.0112C11.1501 10.7204 10.8205 10.5459 10.5297 10.6429Z" fill="#FFB9A4"/> <path d="M9.15355 14.2295L12.2747 22.7788C12.3523 23.0114 12.5849 23.1665 12.8175 23.1665C12.8757 23.1665 12.9532 23.1471 13.0114 23.1278C13.3216 23.0114 13.4767 22.6819 13.3603 22.3911L12.1002 18.921L18.2844 16.6722L18.7497 17.9517C18.8272 18.1843 19.0599 18.3394 19.2925 18.3394C19.3506 18.3394 19.4282 18.32 19.4863 18.3006C19.7965 18.1843 19.9516 17.8547 19.8353 17.5639L19.37 16.2845L20.6495 15.8192C20.9597 15.7029 21.1148 15.3733 20.9985 15.0825C20.8821 14.7724 20.5526 14.6173 20.2618 14.7336L18.4395 15.3927L11.7125 17.8547L10.4524 14.3846L12.6237 13.5704C12.9338 13.4541 13.0695 13.1245 12.9726 12.8144C12.8563 12.5042 12.5267 12.3685 12.2166 12.4654L9.48312 13.4735C9.4395 13.4929 9.26987 13.5656 9.17294 13.7546C9.06147 13.9824 9.13901 14.1956 9.15355 14.2295Z" /> </svg>
+						</div>
+						<a href="danh-sach-cua-hang" title="Hệ thống cửa hàng">Hệ thống cửa hàng</a>
+					</div>
+					
+
+					<div class="link-social">
+
+							<a class="fb" href="https://www.facebook.com/messages/e2ee/t/6956398887773766" title="Theo dõi trên Facebook">
+							<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none"> <g clip-path="url(#clip0_9_4607)"> <path d="M36 17.9996C35.9999 14.5592 35.0139 11.1908 33.1586 8.2935C31.3034 5.39618 28.6567 3.09123 25.5319 1.65162C22.4072 0.21201 18.9354 -0.301944 15.5276 0.170625C12.1198 0.643193 8.91877 2.08248 6.30368 4.31805C3.68859 6.55361 1.76896 9.49179 0.772122 12.7846C-0.224714 16.0775 -0.256996 19.587 0.679101 22.8976C1.6152 26.2082 3.48046 29.1812 6.05398 31.4645C8.6275 33.7478 11.8015 35.2457 15.2 35.7809V23.2129H10.6213V17.9996H15.192V14.0316C15.192 9.52223 17.88 7.0289 21.992 7.0289C23.3419 7.04778 24.6886 7.16543 26.0213 7.3809V11.8102H23.752C21.5147 11.8102 20.8187 13.1996 20.8187 14.6209V17.9996H25.8107L25.0107 23.2022H20.8133V35.7809C25.0469 35.1099 28.9022 32.9505 31.686 29.6911C34.4699 26.4316 35.9995 22.286 36 17.9996Z" fill="#FFB9A4"/> <path d="M25.0051 23.2133L25.8051 18.0106H20.8131V14.6213C20.8131 13.2 21.5091 11.8106 23.7464 11.8106H26.0158V7.3813C24.683 7.16583 23.3363 7.04818 21.9864 7.0293C17.8744 7.0293 15.1864 9.52263 15.1864 14.032V18H10.6211V23.2133H15.1918V35.792C17.056 36.0835 18.9542 36.0835 20.8184 35.792V23.2133H25.0051Z" fill="#FFECE1"/> </g> <defs> <clipPath id="clip0_9_4607"> <rect width="36" height="36" fill="white"/> </clipPath> </defs> </svg>
+						</a>
+
+
+							<a class="tw" href="https://www.facebook.com/messages/e2ee/t/6956398887773766" title="Chat ngay">
+							<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none"> <g clip-path="url(#clip0_9_4610)"> <path d="M18 36C27.9411 36 36 27.9411 36 18C36 8.05888 27.9411 0 18 0C8.05888 0 0 8.05888 0 18C0 27.9411 8.05888 36 18 36Z" fill="#FFB9A4"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M18 4.66699C10.3387 4.66699 4.39999 10.267 4.39999 17.859C4.3764 19.6953 4.74478 21.5154 5.48054 23.198C6.2163 24.8806 7.3025 26.3869 8.66666 27.6163C8.77688 27.7137 8.86612 27.8324 8.92893 27.9654C8.99174 28.0983 9.0268 28.2427 9.03199 28.3897L9.10666 30.811C9.11236 30.9891 9.16173 31.1631 9.25041 31.3177C9.3391 31.4722 9.4644 31.6026 9.6153 31.6974C9.76619 31.7922 9.93806 31.8485 10.1158 31.8614C10.2935 31.8742 10.4717 31.8432 10.6347 31.771L13.3333 30.5817C13.5614 30.4795 13.8181 30.4606 14.0587 30.5283C15.3419 30.8808 16.6665 31.0602 17.9973 31.0617C25.656 31.0617 31.5973 25.4483 31.5973 17.8697C31.5973 10.291 25.6587 4.66699 18 4.66699Z" fill="white"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M9.8318 21.7152L13.8318 15.3792C13.9816 15.1403 14.1793 14.9351 14.4125 14.7767C14.6457 14.6182 14.9092 14.5098 15.1865 14.4584C15.4637 14.407 15.7486 14.4137 16.023 14.4781C16.2975 14.5425 16.5557 14.6632 16.7811 14.8325L19.9598 17.2165C20.1001 17.3255 20.2728 17.3846 20.4505 17.3846C20.6282 17.3846 20.8008 17.3255 20.9411 17.2165L25.2425 13.9578C25.3629 13.8662 25.5117 13.8199 25.6628 13.8269C25.814 13.8338 25.9578 13.8937 26.0693 13.996C26.1808 14.0982 26.2528 14.2365 26.2728 14.3864C26.2927 14.5364 26.2593 14.6886 26.1785 14.8165L22.1785 21.1552C22.0273 21.3926 21.8286 21.5963 21.5949 21.7533C21.3612 21.9102 21.0975 22.0171 20.8205 22.0672C20.5435 22.1173 20.2591 22.1095 19.9852 22.0443C19.7113 21.9792 19.4539 21.858 19.2291 21.6885L16.0505 19.3045C15.909 19.198 15.7368 19.1405 15.5598 19.1405C15.3828 19.1405 15.2106 19.198 15.0691 19.3045L10.7758 22.5605C10.6564 22.6511 10.5092 22.6974 10.3595 22.6913C10.2097 22.6852 10.0667 22.6272 9.95506 22.5273C9.84341 22.4273 9.77004 22.2915 9.74754 22.1434C9.72505 21.9952 9.75484 21.8438 9.8318 21.7152Z" fill="#FFB9A4"/> </g> <defs> <clipPath id="clip0_9_4610"> <rect width="36" height="36" fill="white"/> </clipPath> </defs> </svg>
+						</a>
+						
+
+						
+						<a class="pi" href="/" title="Theo dõi trên Instagram">
+							<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none"> <g clip-path="url(#clip0_9_4615)"> <path d="M18 36C27.9411 36 36 27.9411 36 18C36 8.05888 27.9411 0 18 0C8.05888 0 0 8.05888 0 18C0 27.9411 8.05888 36 18 36Z" fill="#FFB9A4"/> <path d="M18 8.70699C21.0267 8.70699 21.384 8.72033 22.5787 8.77366C23.298 8.7824 24.0105 8.91407 24.6854 9.16299C25.1761 9.34682 25.6203 9.63633 25.9867 10.011C26.3631 10.3769 26.6529 10.8225 26.8347 11.315C27.0848 11.9887 27.2165 12.7005 27.224 13.419C27.28 14.6137 27.2907 14.9737 27.2907 18.0003C27.2907 21.027 27.2907 21.3843 27.224 22.579C27.2165 23.2975 27.0848 24.0093 26.8347 24.683C26.6462 25.1717 26.3577 25.6156 25.9875 25.9862C25.6174 26.3568 25.1738 26.6459 24.6854 26.835C24.0105 27.0839 23.298 27.2156 22.5787 27.2243C21.384 27.2777 21.0267 27.291 18 27.291C14.9734 27.291 14.616 27.2777 13.4214 27.2243C12.7021 27.2156 11.9896 27.0839 11.3147 26.835C10.8262 26.6459 10.3827 26.3568 10.0125 25.9862C9.64241 25.6156 9.35384 25.1717 9.16536 24.683C8.91531 24.0093 8.78359 23.2975 8.77603 22.579C8.72003 21.3843 8.70936 21.0243 8.70936 18.0003C8.70936 14.9763 8.70936 14.6137 8.77603 13.419C8.78359 12.7005 8.91531 11.9887 9.16536 11.315C9.34717 10.8225 9.63692 10.3769 10.0134 10.011C10.3797 9.63633 10.824 9.34682 11.3147 9.16299C11.9896 8.91407 12.7021 8.7824 13.4214 8.77366C14.616 8.72033 14.9734 8.70699 18 8.70699ZM18 6.66699C14.9227 6.66699 14.5334 6.66699 13.328 6.73366C12.3872 6.75482 11.4567 6.93514 10.576 7.26699C9.82287 7.55771 9.13889 8.0028 8.56803 8.57366C7.99718 9.14451 7.55208 9.82851 7.26136 10.5817C6.92851 11.4611 6.74814 12.3909 6.72803 13.331C6.67203 14.5417 6.65869 14.931 6.65869 18.0057C6.65869 21.0803 6.65869 21.4723 6.72803 22.6777C6.74857 23.6186 6.92892 24.5492 7.26136 25.4297C7.55268 26.1822 7.99801 26.8655 8.56881 27.4358C9.13962 28.0062 9.8233 28.451 10.576 28.7417C11.4563 29.0748 12.387 29.2552 13.328 29.275C14.536 29.331 14.928 29.3443 18 29.3443C21.072 29.3443 21.4667 29.331 22.672 29.275C23.613 29.2552 24.5438 29.0748 25.424 28.7417C26.1768 28.451 26.8604 28.0062 27.4312 27.4358C28.0021 26.8655 28.4474 26.1822 28.7387 25.4297C29.0711 24.5492 29.2515 23.6186 29.272 22.6777C29.328 21.4697 29.3414 21.0777 29.3414 18.0057C29.3414 14.9337 29.3414 14.539 29.272 13.331C29.2519 12.3909 29.0716 11.4611 28.7387 10.5817C28.448 9.82851 28.0029 9.14451 27.432 8.57366C26.8612 8.0028 26.1772 7.55771 25.424 7.26699C24.5434 6.93514 23.6129 6.75482 22.672 6.73366C21.464 6.67766 21.072 6.66699 18 6.66699Z" fill="white"/> <path d="M17.9998 12.1787C16.8483 12.1782 15.7226 12.5192 14.7649 13.1585C13.8072 13.7978 13.0607 14.7068 12.6197 15.7705C12.1787 16.8341 12.063 18.0047 12.2873 19.1341C12.5116 20.2635 13.0658 21.301 13.8799 22.1154C14.6939 22.9298 15.7311 23.4845 16.8604 23.7093C17.9897 23.9342 19.1604 23.819 20.2242 23.3785C21.2881 22.938 22.1974 22.1919 22.8372 21.2345C23.477 20.2771 23.8185 19.1515 23.8185 18C23.8188 17.2357 23.6686 16.4788 23.3763 15.7725C23.084 15.0663 22.6555 14.4245 22.1151 13.8839C21.5748 13.3433 20.9332 12.9145 20.2271 12.6219C19.521 12.3293 18.7641 12.1787 17.9998 12.1787ZM17.9998 21.7787C17.2523 21.7787 16.5216 21.557 15.9002 21.1417C15.2787 20.7264 14.7944 20.1361 14.5085 19.4455C14.2226 18.7548 14.1479 17.9949 14.2939 17.2619C14.4399 16.5288 14.8001 15.8555 15.3288 15.3272C15.8575 14.7988 16.5311 14.4392 17.2642 14.2937C17.9974 14.1482 18.7573 14.2234 19.4477 14.5098C20.1381 14.7962 20.728 15.2809 21.1429 15.9027C21.5578 16.5244 21.779 17.2552 21.7784 18.0027C21.777 19.004 21.3783 19.9637 20.6698 20.6712C19.9613 21.3787 19.001 21.776 17.9998 21.776V21.7787Z" fill="white"/> <path d="M24.0504 13.3089C24.8015 13.3089 25.4104 12.7 25.4104 11.9489C25.4104 11.1978 24.8015 10.5889 24.0504 10.5889C23.2993 10.5889 22.6904 11.1978 22.6904 11.9489C22.6904 12.7 23.2993 13.3089 24.0504 13.3089Z" fill="white"/> </g> <defs> <clipPath id="clip0_9_4615"> <rect width="36" height="36" fill="white"/> </clipPath> </defs> </svg>
+						</a>
+						
+
+						
+						<a class="go" href="/" title="Theo dõi trên Youtube">
+							<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none"> <g clip-path="url(#clip0_9_4620)"> <path d="M18 36C27.9411 36 36 27.9411 36 18C36 8.05888 27.9411 0 18 0C8.05888 0 0 8.05888 0 18C0 27.9411 8.05888 36 18 36Z" fill="#FFB9A4"/> <path d="M29.4986 12.2237C29.3619 11.712 29.0927 11.2453 28.7181 10.8708C28.3436 10.4963 27.877 10.2271 27.3653 10.0903C25.5039 9.61035 17.9999 9.61035 17.9999 9.61035C17.9999 9.61035 10.4959 9.61035 8.62393 10.1117C8.11221 10.2484 7.64558 10.5176 7.27104 10.8921C6.89651 11.2667 6.62732 11.7333 6.49059 12.245C5.98926 14.1117 5.98926 18.021 5.98926 18.021C5.98926 18.021 5.98926 21.9277 6.49059 23.7997C6.62862 24.3093 6.89847 24.7736 7.27298 25.1457C7.64749 25.5179 8.11345 25.7848 8.62393 25.9197C10.4959 26.4103 17.9999 26.4103 17.9999 26.4103C17.9999 26.4103 25.5039 26.4103 27.3759 25.909C27.8864 25.7742 28.3523 25.5072 28.7269 25.1351C29.1014 24.7629 29.3712 24.2986 29.5092 23.789C30.0106 21.9224 30.0106 18.0103 30.0106 18.0103C30.0106 18.0103 29.9999 14.0957 29.4986 12.2237ZM15.5999 21.6103V14.4104L21.8346 18.0103L15.5999 21.6103Z" fill="white"/> </g> <defs> <clipPath id="clip0_9_4620"> <rect width="36" height="36" fill="white"/> </clipPath> </defs> </svg>
+						</a>
+													
+
+					</div>
+
+				</div>
+				<div class="col-lg-3 col-md-6 col-12">
+					<h4 class="title-footer arrow">
+						Chính sách
+					</h4>
+					<ul class="list-menu">
+						
+						<li><a href="/" title="Chính sách bán hàng">Chính sách bán hàng</a></li>
+						
+						<li><a href="/" title="Chính sách mua hàng">Chính sách mua hàng</a></li>
+						
+						<li><a href="/" title="Chính sách đổi trả">Chính sách đổi trả</a></li>
+						
+						<li><a href="/" title="Chính sách đặc biệt">Chính sách đặc biệt</a></li>
+						
+						<li><a href="/" title="Chính sách Affiliate">Chính sách Affiliate</a></li>
+						
+						<li><a href="/" title="Chính sách đại lý">Chính sách đại lý</a></li>
+						
+					</ul>
+				</div>
+				<div class="col-lg-2 col-md-6 col-12">
+					<h4 class="title-footer arrow">
+						Dịch vụ
+					</h4>
+					<ul class="list-menu">
+						
+						<li><a href="/" title="Dịch vụ bảo trì">Dịch vụ bảo trì</a></li>
+						
+						<li><a href="/" title="Dịch vụ EgoCare">Dịch vụ 2Boy Store</a></li>
+						
+						<li><a href="/" title="Dịch vụ vàng">Dịch vụ vàng</a></li>
+						
+						<li><a href="/" title="Dịch vụ vận chuyển">Dịch vụ vận chuyển</a></li>
+						
+						<li><a href="/" title="Dịch vụ sau bán">Dịch vụ sau bán</a></li>
+						
+						<li><a href="/" title="Dịch vụ mua lại">Dịch vụ mua lại</a></li>
+						
+					</ul>
+				</div>
+				<div class="col-lg-3 col-md-6 col-12">
+					<h4>
+						Giờ mở cửa
+					</h4>
+					<p>
+						Từ 9:00 - 21:30 tất cả các ngày trong tuần (bao gồm cả các ngày lễ, ngày Tết).
+					</p>
+					
+					<h4>
+						Góp ý, Khiếu mại
+					</h4>
+					<div class="item">
+						<div class="icon">
+							<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 18 18"> <g clip-path="url(#clip0_9_4653)"> <path d="M17.4918 13.2125L14.9789 10.6997C14.0817 9.80248 12.5572 10.16 12.1962 11.327C11.9263 12.1331 11.0291 12.5817 10.2231 12.403C8.42867 11.9544 6.00694 9.62024 5.55834 7.73823C5.28849 6.93215 5.8282 6.03495 6.63428 5.76509C7.80134 5.40762 8.15881 3.87958 7.26162 2.98238L4.74876 0.469526C4.03031 -0.157811 2.95437 -0.157811 2.32703 0.469526L0.623763 2.1763C-1.07951 3.9707 0.806006 8.72655 5.02213 12.9427C9.23825 17.1588 13.9941 19.1319 15.7885 17.3375L17.4918 15.6343C18.1191 14.9158 18.1191 13.8399 17.4918 13.2125Z"/> </g> <defs> <clipPath id="clip0_9_4653"> <rect width="17.965" height="18" fill="white"/> </clipPath> </defs> </svg>
+						</div>
+						<a class="fone" href="tel:19006750" title="Gọi ngay 1900 6750">1900 6750</a>
+					</div>
+					
+					<div class="form-subscribe d-flex">
+						<h4>
+							Nhận tin khuyến mãi
+						</h4>
+						<div class="formchip" id="formchimp">
+							<form id="mc-form" class="newsletter-form" data-toggle="validator" action="https://gmail.us2.list-manage.com/subscribe/post-json?u=ef7f65e3be67e30ff1c4bd591&id=a7430e9bc5">
+								<div class="input-group">
+									<input aria-label="Địa chỉ Email" type="email" class="form-control" placeholder="Nhập email của bạn" name="EMAIL" required autocomplete="off" />
+									<button class="btn" type="submit" aria-label="Đăng kí" name="subscribe">
+										Đăng kí
+									</button>
+								</div>
+							</form>
+							<div class="mailchimp-alerts">
+								<div class="mailchimp-submitting"></div>
+								<div class="mailchimp-success"></div>
+								<div class="mailchimp-error"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

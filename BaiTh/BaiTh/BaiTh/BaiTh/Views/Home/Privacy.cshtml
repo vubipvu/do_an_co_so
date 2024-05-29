@@ -1,0 +1,128 @@
+﻿@{
+    ViewData["Title"] = "";
+}
+<h1>@ViewData["Title"]</h1>
+
+<!DOCTYPE html>
+<html lang="vi">
+
+    <meta charset="UTF-8" />
+     
+    <meta name="description" content="">
+    <title>Tin tức		</title>
+    <meta name="keywords" content="Tin tức, " />
+
+
+    <style>
+    .right-content {
+        margin: 0 auto; /* Đây là cách căn giữa nội dung trang web theo chiều ngang */
+        max-width: 900px; /* Điều chỉnh kích thước tối đa của nội dung để tránh căn giữa quá rộng */
+    }
+
+    .list-blogs {
+        margin-top: 20px; /* Thêm khoảng cách phía trên */
+        margin-bottom: 20px; /* Thêm khoảng cách phía dưới */
+    }
+
+    .breadcrumb .breadcrumb-item a {
+        text-decoration: none;
+    }
+    </style>
+    <body>
+    <div class="container">
+        <ul class="breadcrumb">
+            <li class="home">
+                <a href="/" class="text-dark font-size-14px text-decoration-none" style="padding: 11px 0;">Trang chủ</a>
+                <span class="mr_lr">&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="14" height="13" viewBox="0 0 14 13" fill="none"> <path d="M13.4246 6.50003L7.41421 12.5104L6 11.0962L10.5962 6.50003L6 1.90384L7.41422 0.489624L13.4246 6.50003Z" fill="#8C8C8C"></path> <path d="M8 6.50003L1.98959 12.5104L0.575378 11.0962L5.17157 6.50003L0.57538 1.90384L1.98959 0.489624L8 6.50003Z" fill="#8C8C8C"></path> </svg>&nbsp;</span>
+            </li>
+            <li>
+                <span class="text-dark font-size-14px" style="padding: 11px 0;"> Tin tức</span>
+            </li>
+        </ul>
+    </div>
+        <div class="right-content col-lg-9 col-12 order-lg-2 text-center ">
+            <h1 class="title-page">Tin tức</h1>
+
+            <div class="list-blogs row">
+
+
+                <div class="col-lg-4 col-md-4 col-12">
+                    <article class="item-blog">
+                     @*    <a class="thumb" href="/New/Index" title="Đồng hồ Vacheron Constantin ra mắt phiên bản màu mới">
+                            <img src="https://bizweb.dktcdn.net/100/508/659/articles/vipx.jpg?v=1705977539800" data-src="https://bizweb.dktcdn.net/100/508/659/articles/vipx.jpg?v=1705977539800" alt="Đồng hồ Vacheron Constantin ra mắt phiên bản màu mới" class="lazyload img-responsive loaded">
+                        </a>
+                        <span class="d-flex time-post">
+                            Thứ Ba,
+                            23/01/2024
+                        </span>
+                        <h3 class="d-block">
+                        <a href="/New/Index" title="Đồng hồ Vacheron Constantin ra mắt phiên bản màu mới">Đồng hồ Vacheron Constantin ra mắt phiên bản màu mới</a>
+                        </h3>
+                        <p class="content-description">
+                            Đầu tháng 10, "Égérie" - bộ sưu tập đồng hồ nữ cao cấp ra mắt năm 2020 của Vacheron Constantin - khoác lên mình bộ...
+                        </p>
+                    </article>
+                </div>
+
+              
+
+                <div class="col-lg-4 col-md-4 col-12">
+                    <article class="item-blog">
+                    <a class="thumb" href="/New/Index" title="Vacheron Constantin giới thiệu 5 mẫu Overseas tại triển lãm đồng hồ">
+                            <img src="https://bizweb.dktcdn.net/100/508/659/articles/xa-si.jpg?v=1705977367963" data-src="https://bizweb.dktcdn.net/100/508/659/articles/xa-si.jpg?v=1705977367963" alt="Vacheron Constantin giới thiệu 5 mẫu Overseas tại triển lãm đồng hồ" class="lazyload img-responsive loaded">
+                        </a>
+                        <span class="d-flex time-post">
+                            Thứ Ba,
+                            23/01/2024
+                        </span>
+                        <h3 class="d-block">
+                        <a href="/New/Index" title=""></a>
+                        </h3>
+                        <p class="content-description">
+                          
+                        </p>
+                    </article>
+                </div>
+
+                 *@
+
+                <div class="text-center col-12 col-lg-12">
+
+                    <nav class="clearfix relative nav_pagi w_100 ">
+                        <ul class="pagination clearfix">
+
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#">
+                                    <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="angle-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512" class="svg-inline--fa fa-angle-left fa-w-6"><path fill="currentColor" d="M4.2 247.5L151 99.5c4.7-4.7 12.3-4.7 17 0l19.8 19.8c4.7 4.7 4.7 12.3 0 17L69.3 256l118.5 119.7c4.7 4.7 4.7 12.3 0 17L168 412.5c-4.7 4.7-12.3 4.7-17 0L4.2 264.5c-4.7-4.7-4.7-12.3 0-17z" class=""></path></svg>
+                                </a>
+                            </li>
+
+
+
+
+@* 
+                            <li class="active page-item disabled"><a class="page-link" href="#">1</a></li>
+
+
+
+
+                            <li class="page-item"><a class="page-link" href="/tin-tuc?page=2">2</a></li>
+
+
+ *@
+
+                            @* <li class="page-item hidden-xs">
+                                <a class="page-link" href="/tin-tuc?page=2">
+                                    <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512" class="svg-inline--fa fa-angle-right fa-w-6"><path fill="currentColor" d="M187.8 264.5L41 412.5c-4.7 4.7-12.3 4.7-17 0L4.2 392.7c-4.7-4.7-4.7-12.3 0-17L122.7 256 4.2 136.3c-4.7-4.7-4.7-12.3 0-17L24 99.5c4.7-4.7 12.3-4.7 17 0l146.8 148c4.7 4.7 4.7 12.3 0 17z" class=""></path></svg>
+                                </a>
+                            </li> *@
+
+                        </ul>
+                    </nav>
+
+                </div>
+
+            </div>
+
+        </div>
+    </body>

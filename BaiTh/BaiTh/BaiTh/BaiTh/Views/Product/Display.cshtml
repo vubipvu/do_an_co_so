@@ -1,0 +1,103 @@
+﻿@model BaiTh.Models.Product
+
+@{
+    ViewData["Title"] = "Thông Tin Sản Phẩm";
+}
+<style>
+    .breadcrumb .breadcrumb-item a {
+        text-decoration: none;
+    }
+
+    
+</style>
+<h2>Thông Tin Sản Phẩm</h2>
+
+<div class="container">
+    <ul class="breadcrumb">
+        <li class="home">
+            <a href="/Product/Index" class="text-dark font-size-14px text-decoration-none" style="padding: 11px 0;">Sản phẩm</a>
+            <span class="mr_lr">&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="14" height="13" viewBox="0 0 14 13" fill="none"> <path d="M13.4246 6.50003L7.41421 12.5104L6 11.0962L10.5962 6.50003L6 1.90384L7.41422 0.489624L13.4246 6.50003Z" fill="#8C8C8C"></path> <path d="M8 6.50003L1.98959 12.5104L0.575378 11.0962L5.17157 6.50003L0.57538 1.90384L1.98959 0.489624L8 6.50003Z" fill="#8C8C8C"></path> </svg>&nbsp;</span>
+        </li>
+        <li>
+            <span class="text-dark font-size-14px" style="padding: 11px 0;">Thông tin sản phẩm</span>
+        </li>
+    </ul>
+</div>
+<hr />
+<div class="container">
+    <div class="row">
+
+
+        <div class="col-5 align-items-center">
+            <div class="row mt-2 justify-content-center">
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <img src="@Model.ImageUrl" alt="Product Image" style="max-width: 250px;" />
+                }
+            </div>
+            <div class="row  mt-2">
+                @if (ViewBag.lsImage != null)
+                {
+                    foreach (var img in ViewBag.lsImage)
+                    {
+                        <img class="m-1" src="@img.Url" alt="Product Image" style="max-width: 100px; max-height: 100px" />
+                    }
+                }
+            </div>
+
+        </div>
+        <div class="col-1"></div>
+        <div class="col-6 bg-light">
+            <h2>@Model.Name</h2>
+            <div class="row gx-5">
+                <div class="col">
+                    <div class="p-3  bg-light"><strong>Giá:</strong></div>
+                </div>
+                <div class="col">
+                    <div class="p-3  bg-light">@Model.Price đ</div>
+                </div>
+            </div>
+            <div class="row gx-5">
+                <div class="col">
+                    <div class="p-3  bg-light"><strong>Miêu tả:</strong></div>
+                </div>
+                <div class="col">
+                    <div class="p-3  bg-light">@Model.Description</div>
+                </div>
+            </div>
+            <div class="row gx-5">
+                <div class="col">
+                    <div class="p-3  bg-light"><strong>Thương hiệu:</strong></div>
+                </div>
+                <div class="col">
+                    <div class="p-3  bg-light">@Model.Category.Name</div>
+                </div>
+                @if(@Model.Coupon != null){
+                    <div class="row gx-5">
+                        <div class="col">
+                            <div class="p-3  bg-light"><strong>Phiếu giảm giá:</strong></div>
+                        </div>
+                    <div class="col">
+                        <div class="p-3  bg-light">@Model.Coupon.Code - @Model.Coupon.DiscountPercentage %</div>
+                    </div>
+
+                </div>
+                    <div class="row gx-5">
+                        <div class="col">
+                            <div class="p-3  bg-light"><strong>Ngày hết hạn:</strong></div>
+                        </div>
+                        <div class="col">
+                            <div class="p-3  bg-light">@Model.Coupon.ValidUntil.ToShortDateString()</div>
+                        </div>
+
+                    </div>
+                }
+
+        </div>
+
+    </div>
+
+</div>
+
+
+

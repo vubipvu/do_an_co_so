@@ -1,0 +1,61 @@
+﻿@model BaiTh.Models.Product
+
+@{
+    ViewData["Title"] = "Update";
+}
+
+<h1>Update</h1>
+
+<h4>Product</h4>
+<hr />
+<form asp-action="Update" asp-area="Admin" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Price"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CategoryId">Category</label>
+        <select asp-for="CategoryId" asp-items="@ViewBag.Categories" class="form-control"></select>
+    </div>
+    <div class="form-group">
+        <label asp-for="CouponId" class="control-label">Phiếu giảm giá:</label>
+        <select asp-for="CouponId" asp-items="@ViewBag.Coupons" class="form-control">
+            <option value="">-- Chọn phiếu giảm giá --</option>
+        </select>
+        <span asp-validation-for="CouponId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mt-2">
+        <label asp-for="ImageUrl">Product Image</label>
+        <input type="file" asp-for="ImageUrl" class="form-control " id="imageInput" />
+        <img class="mt-2" src="@Model.ImageUrl" alt="Product Image" style="max-width: 200px;" id="previewImage" />
+    </div>
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>
+
+<script>
+    document.getElementById('imageInput').addEventListener('change', function (e) {
+        var output = document.getElementById('previewImage');
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                output.src = e.target.result;
+                output.style.display = 'block';
+            }
+
+            reader.readAsDataURL(this.files[0]);
+        }
+    })
+</script>

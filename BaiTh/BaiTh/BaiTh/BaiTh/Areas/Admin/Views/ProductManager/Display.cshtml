@@ -1,0 +1,69 @@
+﻿@model BaiTh.Models.Product
+
+@{
+    ViewData["Title"] = "Display";
+}
+<h2>Product Details</h2>
+<hr />
+<div class="container">
+    <div class="row">
+
+
+        <div class="col-5 align-items-center">
+            <div class="row mt-2 justify-content-center">
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <img src="@Model.ImageUrl" alt="Product Image" style="max-width: 250px;" />
+                }
+            </div>
+            <div class="row  mt-2">
+                @if (ViewBag.lsImage != null)
+                {
+                    foreach (var img in ViewBag.lsImage)
+                    {
+                        <img class="m-1" src="@img.Url" alt="Product Image" style="max-width: 100px; max-height: 100px" />
+                    }
+                }
+            </div>
+
+        </div>
+        <div class="col-1"></div>
+        <div class="col-6 bg-light">
+            <h2>@Model.Name</h2>
+            <div class="row gx-5">
+                <div class="col">
+                    <div class="p-3  bg-light"><strong>Price:</strong></div>
+                </div>
+                <div class="col">
+                    <div class="p-3  bg-light">@Model.Price đ</div>
+                </div>
+            </div>
+            <div class="row gx-5">
+                <div class="col">
+                    <div class="p-3  bg-light"><strong>Description:</strong></div>
+                </div>
+                <div class="col">
+                    <div class="p-3  bg-light">@Model.Description</div>
+                </div>
+            </div>
+            <div class="row gx-5">
+                <div class="col">
+                    <div class="p-3  bg-light"><strong>Category:</strong></div>
+                </div>
+                <div class="col">
+                    <div class="p-3  bg-light">@Model.Category.Name</div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="mt-4">
+        <a class="btn btn-primary" asp-area="Admin" asp-route-id="@Model.Id" asp-action="Update" asp-controller="Product">Update</a>
+        <a class="btn btn-warning" asp-area="Admin" asp-action="Index">Back to List</a>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,127 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<!-- Added Bootstrap CSS for proper styling -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+
+
+
+<style>
+    /* Existing CSS styles */
+
+    /* Additional CSS for custom styling */
+    .login-form {
+        background-color: #fff; /* Set background color for the login form */
+        border: 2px solid #fff; /* Set border color to white */
+        border-radius: 15px; /* Adjusted border-radius for a slightly rounded look */
+        padding: 30px; /* Decreased padding for a smaller form */
+        box-shadow: 0 8px 8px rgba(0, 0, 0, 0.1); /* Optional: Add box shadow for depth */
+    }
+
+    .form-input {
+        background-color: #ebebeb !important; /* Override input background color */
+    }
+
+    .form-floating label {
+        color: #000 !important; /* Override label color */
+    }
+
+    .form-floating span {
+        color: #dc3545 !important; /* Override validation message color */
+    }
+
+    /* Align social icons in the same row */
+    .social-icons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px; /* Add some gap between icons */
+    }
+
+    /* Adjust the size of social icons */
+    .social-icon {
+        width: 129px;
+        height: 37px;
+    }
+
+    /* Caption for login frame size */
+    .login-frame-caption {
+        font-size: 12px;
+        color: #666;
+        text-align: center;
+        margin-top: 10px;
+    }
+</style>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <!-- Center-align the form -->
+        <div class="col-md-5">
+            <!-- Slightly smaller login form -->
+            <section class="text-white login-form">
+                <form id="account" method="post">
+                    <h2 class="text-center text-black">ĐẶNG NHẬP</h2>
+                    <h6 class=" text-center text-black fs-20 mb-4">Nếu bạn chưa có tài khoản, đăng ký tại đây</h6>
+
+                    <hr class="bg-light" />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.Email" class="form-control input-bottom-border-only form-input" autocomplete="username" aria-required="true" placeholder="Email" />
+                        <label asp-for="Input.Email" class="form-label"></label>
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.Password" class="form-control input-bottom-border-only form-input" autocomplete="current-password" aria-required="true" placeholder="Password" />
+                        <label asp-for="Input.Password" class="form-label"></label>
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-check mb-3 text-black">
+                        <input class="form-check-input" asp-for="Input.RememberMe" />
+                        <label asp-for="Input.RememberMe" class="form-label">@Html.DisplayNameFor(m => m.Input.RememberMe)</label>
+                    </div>
+                    <div>
+                        <button id="login-submit" type="submit" class="w-100 btn btn-dark btn-outline-light">Đăng Nhập</button>
+                    </div>
+                    <div class="mt-3 text-center">
+                        <a id="forgot-password" asp-page="./ForgotPassword" class="text-black">Quên mật khẩu?</a>
+                    </div>
+                    <div class="mt-1 text-center">
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="text-black">Đăng ký tại đây</a>
+                    </div>
+                    <!-- Social login caption -->
+                    <div class="text-center mb-2 text-black">
+                        Hoặc đăng nhập bằng
+                    </div>
+                    <!-- Social icons in the same row -->
+                    <div class="social-icons">
+                        <!-- Facebook icon as an image -->
+                        <img src="//bizweb.dktcdn.net/assets/admin/images/login/fb-btn.svg" alt="Facebook" class="social-icon" />
+                        <!-- Google icon as an image -->
+                        <a href="javascript:void(0)" class="social-login--google" onclick="loginGoogle()">
+                            <img src="//bizweb.dktcdn.net/assets/admin/images/login/gp-btn.svg" alt="Google" class="social-icon" />
+                        </a>
+                    </div>
+                    
+                   
+                </form>
+            </section>
+        </div>
+    </div>
+</div>
+
+<!-- Existing code -->
+<!-- Existing code -->
+<!-- Existing code -->
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<!-- Bootstrap JavaScript for responsive behavior -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>

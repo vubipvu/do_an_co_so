@@ -1,0 +1,126 @@
+﻿@model ShoppingCart
+
+<h2>Giỏ hàng của bạn</h2>
+
+<style>
+    .table-bordered th, .table-bordered td {
+        border: 1px solid #dee2e6 !important;
+    }
+
+    .table {
+        width: 100%;
+        margin-bottom: 1rem;
+        color: #212529;
+    }
+
+    th {
+        vertical-align: bottom;
+        border-bottom: 2px solid #dee2e6;
+    }
+
+    td, th {
+        padding: .75rem;
+        vertical-align: top;
+        border-top: 1px solid #dee2e6;
+    }
+
+    .btn-danger {
+        color: #fff;
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .btn-primary {
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .empty-cart {
+        font-size: 20px;
+        color: black;
+        text-align: center;
+        position: relative;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .empty-cart-icon {
+        font-size: 3rem;
+        margin-bottom: 10px;
+    }
+
+    .empty-cart-text {
+        display: block;
+    }
+
+    .quantity-input {
+        max-width: 80px; /* Điều chỉnh kích thước tối đa của input */
+    }
+    .breadcrumb .breadcrumb-item a {
+        text-decoration: none;
+    }
+</style>
+
+<div class="container">
+    <ul class="breadcrumb">
+        <li class="home">
+            <a href="/Product/Index" class="text-dark font-size-14px text-decoration-none" style="padding: 11px 0;">Sản phẩm</a>
+            <span class="mr_lr">&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="14" height="13" viewBox="0 0 14 13" fill="none"> <path d="M13.4246 6.50003L7.41421 12.5104L6 11.0962L10.5962 6.50003L6 1.90384L7.41422 0.489624L13.4246 6.50003Z" fill="#8C8C8C"></path> <path d="M8 6.50003L1.98959 12.5104L0.575378 11.0962L5.17157 6.50003L0.57538 1.90384L1.98959 0.489624L8 6.50003Z" fill="#8C8C8C"></path> </svg>&nbsp;</span>
+        </li>
+        <li>
+            <span class="text-dark font-size-14px" style="padding: 11px 0;">Giỏ hàng của bạn</span>
+        </li>
+    </ul>
+</div>
+@if (Model.Items.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Hình ảnh</th>
+                    <th>Sản phẩm</th>
+                    <th>Số lượng</th>
+                    <th>Giá</th>
+                    <th>Tổng cộng</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td><img src="@item.ImageUrl" alt="@item.Name" style="width:100px;height:auto;"></td>
+                        <td>@item.Name</td>
+                        <td>
+                            <form asp-controller="ShoppingCart" asp-action="UpdateQuantity" method="post">
+                                <input type="hidden" name="productId" value="@item.ProductId" />
+                                <div class="input-group">
+                                    <label for="quantity" class="visually-hidden">Số Lượng:</label>
+                                    <input type="number" id="quantity" name="quantity" value="@item.Quantity" class="form-control quantity-input" />
+                                    <button class="btn btn-dark" type="submit">Cập nhật</button>
+                                </div>
+                            </form>
+                        </td>
+                        <td>@String.Format("{0:N} đ", item.Price)</td>
+                        <td>@String.Format("{0:N} đ", item.Price * item.Quantity)</td>
+
+                        <td>
+                            <a href="@Url.Action("RemoveFromCart", new { productId = item.ProductId })" class="btn btn-danger">Xóa</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <a href="/ShoppingCart/Checkout" class="btn btn-dark mt-3">Thanh toán</a>
+}
+else
+{
+    <div class="empty-cart">
+        <i class="bi bi-cart-x-fill empty-cart-icon"></i>
+        <span class="empty-cart-text">Không có sản phẩm nào trong giỏ hàng của bạn.</span>
+    </div>
+}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">

@@ -1,0 +1,54 @@
+﻿@model Order
+<h2>Điền thông tin thanh toán</h2>
+<form asp-action="Checkout" method="post">
+    <div class="form-group">
+        <label asp-for="FullName">Họ tên</label>
+        <input asp-for="FullName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Phone">Điện thoại</label>
+        <input asp-for="Phone" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="ShippingAddress">Địa chỉ</label>
+        <input asp-for="ShippingAddress" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Notes">Ghi chú</label>
+        <textarea asp-for="Notes" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label>Phương thức thanh toán:</label><br>
+        <label>
+            <input type="radio" name="paymentMethod" value="VNPay"  onchange="showPaymentButton()">
+            Thanh toán VNPay - Thanh toán bằng cách chuyển khoản qua ngân hàng
+        </label><br>
+        <label>
+            <input type="radio" name="paymentMethod" value="COD" onchange="hidePaymentButton()">
+            Đặt hàng (COD) - Nhận hàng và kiểm tra thanh toán tiền mặt
+        </label>
+
+    </div>
+
+    <button type="submit2" id="cashButton" class="btn btn-dark" onclick="submitForm()" style="display:none;">Xác nhận mua hàng</button>
+    <input type="submit" id="paymentButton" name="payment" class="btn btn-dark" value="Thanh toán VNPay" style="display:none;">
+</form>
+
+<script>
+    function showPaymentButton() {
+        if (document.querySelector('input[name="paymentMethod"]:checked').value === "VNPay") {
+            document.getElementById('cashButton').style.display = 'none';
+            document.getElementById('paymentButton').style.display = 'inline-block';
+        }
+    }
+
+    function hidePaymentButton() {
+        if (document.querySelector('input[name="paymentMethod"]:checked').value === "COD") {
+            document.getElementById('paymentButton').style.display = 'none';
+            document.getElementById('cashButton').style.display = 'inline-block';
+        }
+    }
+
+</script>
+

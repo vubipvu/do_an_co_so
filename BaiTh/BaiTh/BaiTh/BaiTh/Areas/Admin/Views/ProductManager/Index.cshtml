@@ -1,0 +1,41 @@
+﻿@model IEnumerable<BaiTh.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Trang Chủ</h1>
+
+<p style="text-align: right">
+   
+    
+</p>
+
+<div class="container mt-4">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                <div class="card h-100">
+                    <img src="@item.ImageUrl" class="card-img-top" alt="Product Image">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text">@item.Description</p>
+                        <p class="card-text">Giá: @item.Price</p>
+                        @if (item.Coupon != null)
+                        {
+                            <p class="card-text">Phiếu giảm giá: @item.Coupon.Code - @item.Coupon.DiscountPercentage %</p>
+                            <p class="card-text">Ngày hết hạn: @item.Coupon.ValidUntil.ToShortDateString()</p>
+                        }
+
+                    </div>
+                    <div class="card-footer">
+                        <a href="@Url.Action("Update", new { id = item.Id })" class="btn btn-primary">Cập nhật</a>
+                        <a href="@Url.Action("Display", new { id = item.Id })" class="btn btn-secondary">Chi tiết</a>
+                        <a href="@Url.Action("Delete", new { id = item.Id })" class="btn btn-danger">Xoá</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

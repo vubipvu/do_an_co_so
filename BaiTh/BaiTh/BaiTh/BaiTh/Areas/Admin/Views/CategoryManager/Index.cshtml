@@ -1,0 +1,36 @@
+﻿@model IEnumerable<BaiTh.Models.Category>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Category List</h1>
+
+<p>
+    <a asp-action="Add">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <a href="@Url.Action("Update", new { id = item.Id })" class="btn btn-primary">Cập nhật</a>
+                    <a href="@Url.Action("Display", new { id = item.Id })" class="btn btn-secondary">Chi tiết</a>
+                    <a href="@Url.Action("Delete", new { id = item.Id })" class="btn btn-danger">Xoá</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
